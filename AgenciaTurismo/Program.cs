@@ -34,12 +34,12 @@ internal class Program
 
         new CityController().Update(cities, 1, newdesc);
 
-        if (new addresscontroller().insert(address))
-            console.writeline("registrado com sucesso");
+        if (new AddressController().Insert(address))
+            Console.WriteLine("registrado com sucesso");
         else
-            console.writeline("erro");
+            Console.WriteLine("erro");
 
-        new addresscontroller().findall().foreach (console.writeline) ;
+        new AddressController().FindAll().ForEach (Console.WriteLine) ;
 
         new CityController().Delete(2);
     }
