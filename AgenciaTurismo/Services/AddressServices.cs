@@ -19,9 +19,10 @@ namespace AgenciaTurismo.Services
             Conn = new SqlConnection(strconn);
             Conn.Open();
         }
-        public bool Insert(Address address)
+        public Address Insert(Address address)
         {
             bool status = false;
+            int id = 0;
 
             try
             {
@@ -35,9 +36,9 @@ namespace AgenciaTurismo.Services
                 commandInsert.Parameters.Add(new SqlParameter("@Bairro", address.District));
                 commandInsert.Parameters.Add(new SqlParameter("@CEP", address.ZipCode));
                 commandInsert.Parameters.Add(new SqlParameter("@Complemento", address.Complement));
-                commandInsert.Parameters.Add(new SqlParameter("@IdCidade", address.city.Id));
+                commandInsert.Parameters.Add(new SqlParameter("@IdCidade", InsertCity(address)));
 
-                commandInsert.ExecuteNonQuery();
+                id = (int)commandInsert.ExecuteNonQuery();
                 status = true;
             }
             catch
@@ -49,7 +50,17 @@ namespace AgenciaTurismo.Services
             {
                 Conn.Close();
             }
-            return status;
+            address.Id = id;
+            return address;
+        }
+
+        private int InsertCity(Address address)
+        {
+            string strInsert = "insert into Cidade (Descricao) values (@Descricao); select cast(scope_identity() as int)";
+            SqlCommand commandInsert = new SqlCommand(strInsert, Conn);
+            commandInsert.Parameters.Add(new SqlParameter("@Descricao", address.city.Description));
+
+            return (int)commandInsert.ExecuteScalar();
         }
 
         public List<Address> FindAll()
@@ -57,8 +68,8 @@ namespace AgenciaTurismo.Services
             List<Address> adresslist = new();
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select e.Id,e.Logradouro,e.Numero, e.Bairro, e.CEP, e.Complemento, e.Dtcadastro, c.Id " +
-                "from Endereco e, Cidade c where c.Id = e.IdCidade");
+            sb.Append("select e.Id,e.Logradouro,e.Numero, e.Bairro, e.CEP, e.Complemento, e.Dtcadastro, c.Id as Cidade" +
+                "  from Endereco e, Cidade c where c.Id = e.IdCidade");
 
             SqlCommand commandSelect = new(sb.ToString(), Conn);
             SqlDataReader dr = commandSelect.ExecuteReader();
@@ -75,13 +86,63 @@ namespace AgenciaTurismo.Services
                 address.Complement = (string)dr["Complemento"];
                 address.city = new City()
                 {
-                    Id = (int)dr["Id"]
+                    Id = (int)dr["Cidade"]
                 };
                 address.RegisterDate = (DateTime)dr["Dtcadastro"];
 
                 adresslist.Add(address);
             }
             return adresslist;
+        }
+
+        public bool Update(Address address,int id, string logradouro)
+        {
+            bool status = false;
+
+            try
+            {
+                string strUpdate = "update Endereco Set Logradouro = " + "'" + logradouro + "' where Id = " + id;
+
+                SqlCommand commandUpdate = new SqlCommand(strUpdate, Conn);
+
+                commandUpdate.ExecuteNonQuery();
+                status = true;
+            }
+            catch
+            {
+                status = false;
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return status;
+        }
+
+        public bool Delete(int id)
+        {
+            bool status = false;
+
+            try
+            {
+                string strDelete = $"Delete from Endereco where Id = {id}";
+
+                SqlCommand commandDelete = new SqlCommand(strDelete, Conn);
+
+                commandDelete.ExecuteNonQuery();
+                status = true;
+            }
+            catch
+            {
+                status = false;
+                throw;
+            }
+            finally
+            {
+                Conn.Close();
+            }
+            return status;
         }
     }
 }

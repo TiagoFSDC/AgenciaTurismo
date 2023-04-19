@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AgenciaTurismo.Models;
 using AgenciaTurismo.Services;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace AgenciaTurismo.Controllers
 {
@@ -30,5 +31,7 @@ namespace AgenciaTurismo.Controllers
         {
             return new CityServices().Delete(id);
         }
+
+
     }
 }

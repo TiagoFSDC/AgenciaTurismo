@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AgenciaTurismo.Models;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace AgenciaTurismo.Services
 {
@@ -73,7 +74,7 @@ namespace AgenciaTurismo.Services
         {
             bool status = false;
 
-            try
+            try 
             {
                 string strUpdate = "update Cidade Set Descricao = " + "'" + desc + "' where Id = "+ id;
 

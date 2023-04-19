@@ -13,5 +13,10 @@ namespace AgenciaTurismo.Models
         public string Phone { get; set; }
         public Address address { get; set; } 
         public DateTime RegisterDate { get; set; }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}\nNome: {Name}\nTelefone: {Phone}\nEndereço: {address}\nData de registro: {RegisterDate}\n";
+        }
     }
 }
