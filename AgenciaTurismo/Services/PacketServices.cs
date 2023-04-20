@@ -27,15 +27,15 @@ namespace AgenciaTurismo.Services
 
             try
             {
-                string strInsert = "insert into Packet (HotelId,TiketId,Price,ClientId) " +
+                string strInsert = "insert into Packet (HotelId,TicketId,Price,ClientId) " +
                     "values (@HotelId, @TicketId,@Price,@ClientId)";
 
                 SqlCommand commandInsert = new SqlCommand(strInsert, Conn);
 
                 commandInsert.Parameters.Add(new SqlParameter("@HotelId", InsertHotel(packet)));
-                commandInsert.Parameters.Add(new SqlParameter("@TiketId", InsertTicket(packet)));
-                commandInsert.Parameters.Add(new SqlParameter("@ClientId", InsertClient(packet)));
+                commandInsert.Parameters.Add(new SqlParameter("@TicketId", InsertTicket(packet)));
                 commandInsert.Parameters.Add(new SqlParameter("@Price", packet.Price));
+                commandInsert.Parameters.Add(new SqlParameter("@ClientId", InsertClient(packet)));
 
                 commandInsert.ExecuteNonQuery();
                 status = true;
@@ -55,7 +55,7 @@ namespace AgenciaTurismo.Services
         private int InsertHotel(Packet packet)
         {
             string strInsert = "insert into Hotel (Name, IdAddress, Price) " +
-                "values (@Name, @IdAddress, @Price)";
+                "values (@Name, @IdAddress, @Price); select cast(scope_identity() as int)";
 
             SqlCommand commandInsert = new SqlCommand(strInsert, Conn);
 
@@ -80,13 +80,14 @@ namespace AgenciaTurismo.Services
             commandInsert.Parameters.Add(new SqlParameter("@Complemento", packet.hotel.address.Complement));
             commandInsert.Parameters.Add(new SqlParameter("@IdCidade", InsertCity(packet.hotel.address)));
 
-            return (int)commandInsert.ExecuteScalar();
+            var x = (int)commandInsert.ExecuteScalar();
+            return x;
         }
 
         private int InsertTicket(Packet packet)
         {
             string strInsert = "insert into Ticket (StartId, DestinationId,ClientId, Price) " +
-                                "values (@StartId, @DestinationId, @ClientId, @Price)";
+                                "values (@StartId, @DestinationId, @ClientId, @Price); select cast(scope_identity() as int)";
 
             SqlCommand commandInsert = new SqlCommand(strInsert, Conn);
 
@@ -145,6 +146,7 @@ namespace AgenciaTurismo.Services
 
             return (int)commandInsert.ExecuteScalar();
         }
+
         private int InsertCity(Address address)
         {
             string strInsert = "insert into Cidade (Descricao) values (@Descricao); select cast(scope_identity() as int)";
@@ -153,6 +155,7 @@ namespace AgenciaTurismo.Services
 
             return (int)commandInsert.ExecuteScalar();
         }
+
 
         //public List<Hotel> FindAll()
         //{

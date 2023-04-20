@@ -10,24 +10,24 @@ namespace AgenciaTurismo.Controllers
 {
     public class PacketController
     {
-        //public bool Insert(Packet packet)
-        //{
-        //    return new CityServices().Insert(packet);
-        //}
+        public bool Insert(Packet packet)
+        {
+            return new PacketServices().Insert(packet);
+        }
 
         //public List<City> FindAll()
         //{
-        //    return new CityServices().FindAll();
+        //    //return new PacketServices().FindAll();
         //}
 
-        //public bool Update(Packet packet, int id, string desc)
-        //{
-        //    return new CityServices().Update(packet, id, desc);
-        //}
+        public bool Update(int id, double desc)
+        {
+            return new PacketServices().Update(id, desc);
+        }
 
-        //public bool Delete(int id)
-        //{
-        //    return new CityServices().Delete(id);
-        //}
+        public bool Delete(int id)
+        {
+            return new PacketServices().Delete(id);
+        }
     }
 }
