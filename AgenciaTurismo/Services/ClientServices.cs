@@ -83,7 +83,7 @@ namespace AgenciaTurismo.Services
             StringBuilder sb = new StringBuilder();
 
             sb.Append("select c.Name,c.Phone,c.RegisterDate, e.Id" +
-                " from Endereco e, Client c where e.Id = c.IdEndereco");
+                " from Endereco e Join Client c ON e.Id = c.IdEndereco");
 
             SqlCommand commandSelect = new(sb.ToString(), Conn);
             SqlDataReader dr = commandSelect.ExecuteReader();
@@ -101,13 +101,13 @@ namespace AgenciaTurismo.Services
                     //Street = (string)dr["Logradouro"],
                     //Number = (int)dr["Numero"],
                     //District = (string)dr["Bairro"],
-                    //ZipCode = (string)dr["CEP"],
-                    //Complement = (string)dr["Complemento"],
+                    ZipCode = (string)dr["CEP"],
+                    Complement = (string)dr["Complemento"],
                     city = new City()
                     {
                       Id = (int)dr["Id"]
                     },
-                    //RegisterDate = (DateTime)dr["Dtcadastro"]
+                    RegisterDate = (DateTime)dr["Dtcadastro"]
 
                 };
                 client.RegisterDate = (DateTime)dr["RegisterDate"];

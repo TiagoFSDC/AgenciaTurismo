@@ -115,7 +115,7 @@ internal class Program
         //else
         //    Console.WriteLine("erro");
 
-        //new AddressController().FindAll().ForEach(Console.WriteLine);
+        new AddressController().FindAll().ForEach(Console.WriteLine);
 
         //new CityController().Delete(2);
 
@@ -149,7 +149,7 @@ internal class Program
         //{
         //    Id = 1,
         //    Description = "adwa"
-        //    
+
         //};
 
         //string returninformation = (new CityController().InsertDapper(city2) ? "Registro Inserido" : "Erro");
@@ -158,82 +158,82 @@ internal class Program
 
         //new CityController().GetAllDapper().ForEach(x => Console.WriteLine(x));
 
-        Packet packet = new()
-        {
-            Id = 1,
-            hotel = new Hotel() {
-                Id = 1,
-                Name = "Ibis",
-                address = new Address()
-                {
-                    Id = 1,
-                    Street = "J",
-                    Number = 7,
-                    District = "B",
-                    ZipCode = "123612637",
-                    city = new City() { Id = 1, Description = "Sao Paulo" },
-                    Complement = "lote 20",
-                },
-                Price = (double)250.56,
-            },
-            ticket = new Ticket() {
-                Id = 1,
-                Start = new Address()
-                {
-                    Id = 1,
-                    Street = "J",
-                    Number = 7,
-                    District = "Kla",
-                    ZipCode = "r",
-                    city = new City() { Id = 1, Description = "Americo" },
-                    Complement = "c",
-                },
-                Destination = new Address()
-                {
-                    Id = 1,
-                    Street = "R",
-                    Number = 254,
-                    District = "Bairro",
-                    ZipCode = "123142345",
-                    city = new City() { Id = 1, Description = "Sao Carlos" },
-                    Complement = "h",
-                },
-                client = new Client()
-                {
-                    Id = 1,
-                    Name = "Fabio",
-                    Phone = "123123123",
-                    address = new Address()
-                    {
-                        Id = 1,
-                        Street = "g",
-                        Number = 5,
-                        District = "h",
-                        ZipCode = "r",
-                        city = new City() { Id = 1, Description = "Americo" },
-                        Complement = "c",
-                    }
-                },
-                Price = 546.04
-            },
-            Price = 123.09,
-            client = new Client() {
-                Id = 1,
-                Name = "Tiago",
-                Phone = "123123123",
-                address = new Address()
-                {
-                    Id = 1,
-                    Street = "g",
-                    Number = 5,
-                    District = "h",
-                    ZipCode = "r",
-                    city = new City() { Id = 1, Description = "xx" },
-                    Complement = "c",
-                }
-            }
-        };
-        if (new PacketController().Insert(packet))
-            Console.WriteLine("Sucesso");
+        //Packet packet = new()
+        //{
+        //    Id = 1,
+        //    hotel = new Hotel() {
+        //        Id = 1,
+        //        Name = "Ibis",
+        //        address = new Address()
+        //        {
+        //            Id = 1,
+        //            Street = "J",
+        //            Number = 7,
+        //            District = "B",
+        //            ZipCode = "123612637",
+        //            city = new City() { Id = 1, Description = "Sao Paulo" },
+        //            Complement = "lote 20",
+        //        },
+        //        Price = (double)250.56,
+        //    },
+        //    ticket = new Ticket() {
+        //        Id = 1,
+        //        Start = new Address()
+        //        {
+        //            Id = 1,
+        //            Street = "J",
+        //            Number = 7,
+        //            District = "Kla",
+        //            ZipCode = "r",
+        //            city = new City() { Id = 1, Description = "Americo" },
+        //            Complement = "c",
+        //        },
+        //        Destination = new Address()
+        //        {
+        //            Id = 1,
+        //            Street = "R",
+        //            Number = 254,
+        //            District = "Bairro",
+        //            ZipCode = "123142345",
+        //            city = new City() { Id = 1, Description = "Sao Carlos" },
+        //            Complement = "h",
+        //        },
+        //        client = new Client()
+        //        {
+        //            Id = 1,
+        //            Name = "Fabio",
+        //            Phone = "123123123",
+        //            address = new Address()
+        //            {
+        //                Id = 1,
+        //                Street = "g",
+        //                Number = 5,
+        //                District = "h",
+        //                ZipCode = "r",
+        //                city = new City() { Id = 1, Description = "Americo" },
+        //                Complement = "c",
+        //            }
+        //        },
+        //        Price = 546.04
+        //    },
+        //    Price = 123.09,
+        //    client = new Client() {
+        //        Id = 1,
+        //        Name = "Tiago",
+        //        Phone = "123123123",
+        //        address = new Address()
+        //        {
+        //            Id = 1,
+        //            Street = "g",
+        //            Number = 5,
+        //            District = "h",
+        //            ZipCode = "r",
+        //            city = new City() { Id = 1, Description = "xx" },
+        //            Complement = "c",
+        //        }
+        //    }
+        //};
+        //if (new PacketController().Insert(packet))
+        //    Console.WriteLine("Sucesso");
     }
 }

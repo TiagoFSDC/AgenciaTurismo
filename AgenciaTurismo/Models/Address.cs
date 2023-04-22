@@ -15,7 +15,7 @@ namespace AgenciaTurismo.Models
         public string ZipCode { get; set; }
         public string Complement { get; set; }
         public City city { get; set; }
-        public DateTime RegisterDate { get; set; }
+        public DateOnly RegisterDate { get; set; }
 
         public override string ToString()
         {

@@ -68,8 +68,8 @@ namespace AgenciaTurismo.Services
             List<Address> adresslist = new();
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select e.Id,e.Logradouro,e.Numero, e.Bairro, e.CEP, e.Complemento, e.Dtcadastro, c.Id as Cidade" +
-                "  from Endereco e, Cidade c where c.Id = e.IdCidade");
+            sb.Append("select e.Id,e.Logradouro,e.Numero, e.Bairro, e.CEP, e.Complemento, e.Dtcadastro as dataendereço, c.Id as Cidade, c.Descricao, c.Dtcadastro as data" +
+                "  from Endereco e Join Cidade c ON c.Id = e.IdCidade");
 
             SqlCommand commandSelect = new(sb.ToString(), Conn);
             SqlDataReader dr = commandSelect.ExecuteReader();
@@ -86,9 +86,11 @@ namespace AgenciaTurismo.Services
                 address.Complement = (string)dr["Complemento"];
                 address.city = new City()
                 {
-                    Id = (int)dr["Cidade"]
+                    Id = (int)dr["Cidade"],
+                    Description = (string)dr["Descricao"],
+                    RegisterDate = (DateOnly)dr["data"]
                 };
-                address.RegisterDate = (DateTime)dr["Dtcadastro"];
+                address.RegisterDate = (DateTime)dr["dataendereço"];
 
                 adresslist.Add(address);
             }
