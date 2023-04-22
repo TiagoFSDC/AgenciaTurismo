@@ -80,7 +80,7 @@ namespace AgenciaTurismo.Services
 
                 city.Id = (int)dr["Id"];
                 city.Description = (string)dr["Descricao"];
-                city.RegisterDate = (DateOnly)dr["Dtcadastro"];
+                city.RegisterDate = (DateTime)dr["Dtcadastro"];
 
                 cities.Add(city);
             }

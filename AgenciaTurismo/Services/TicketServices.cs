@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AgenciaTurismo.Models;
@@ -106,45 +108,91 @@ namespace AgenciaTurismo.Services
             return (int)commandInsert.ExecuteScalar();
         }
 
-        //public List<Hotel> FindAll()
-        //{
-        //    List<Client> clientlist = new();
-        //    StringBuilder sb = new StringBuilder();
+        public List<Ticket> FindAll()
+        {
+            List<Ticket> ticketlist = new();
+            StringBuilder sb = new StringBuilder();
 
-        //    sb.Append("select c.Name,c.Phone,c.RegisterDate, e.Id" +
-        //        " from Endereco e, Client c where e.Id = c.IdEndereco");
+            sb.Append("t.Id, eST.Id, eST.Logradouro," +
+                " eST.Numero, eST.Bairro, eST.CEP, eST.Complemento, eST.DtCadastro,eDT.Id, eDT.Logradouro," +
+                " eDt.Numero, eDT.Bairro, eDT.CEP, eDT.Complemento, eDT.DtCadastro,  " +
+                " cid.Id, cid.Descricao, cid.DtCadastro as data," +
+                " cid2.Id, cid2.Descricao, cid2.DtCadastro as data" +
+                " from Ticket"+
+                " Join " +
+                " Join Endereco e ON h.IdAddress = e.Id" +
+                " Join Cidade as cid ON cid.Id = e.IdCidade");
 
-        //    SqlCommand commandSelect = new(sb.ToString(), Conn);
-        //    SqlDataReader dr = commandSelect.ExecuteReader();
+            SqlCommand commandSelect = new(sb.ToString(), Conn);
+            SqlDataReader dr = commandSelect.ExecuteReader();
 
-        //    while (dr.Read())
-        //    {
-        //        Client client = new();
+            while (dr.Read())
+            {
+                Ticket ticket = new();
 
-        //        client.Id = (int)dr["Id"];
-        //        client.Name = (string)dr["Name"];
-        //        client.Phone = (string)dr["Phone"];
-        //        client.address = new Address()
-        //        {
-        //            Id = (int)dr["Id"],
-        //            //Street = (string)dr["Logradouro"],
-        //            //Number = (int)dr["Numero"],
-        //            //District = (string)dr["Bairro"],
-        //            //ZipCode = (string)dr["CEP"],
-        //            //Complement = (string)dr["Complemento"],
-        //            city = new City()
-        //            {
-        //                Id = (int)dr["Id"]
-        //            },
-        //            //RegisterDate = (DateTime)dr["Dtcadastro"]
+                ticket.Id = (int)dr["Id"];
+                ticket.Start = new Address()
+                {
+                    Id = (int)dr["Id"],
+                    Street = (string)dr["Logradouro"],
+                    Number = (int)dr["Numero"],
+                    District = (string)dr["Bairro"],
+                    ZipCode = (string)dr["CEP"],
+                    Complement = (string)dr["Complemento"],
+                    city = new City()
+                    {
+                        Id = (int)dr["Cidade"],
+                        Description = (string)dr["Descricao"],
+                        RegisterDate = (DateTime)dr["data"]
+                    },
+                    RegisterDate = (DateTime)dr["dataendereço"]
+                };
 
-        //        };
-        //        client.RegisterDate = (DateTime)dr["RegisterDate"];
+                ticket.Destination = new Address()
+                {
+                    Id = (int)dr["Id"],
+                    Street = (string)dr["Logradouro"],
+                    Number = (int)dr["Numero"],
+                    District = (string)dr["Bairro"],
+                    ZipCode = (string)dr["CEP"],
+                    Complement = (string)dr["Complemento"],
+                    city = new City()
+                    {
+                        Id = (int)dr["Cidade"],
+                        Description = (string)dr["Descricao"],
+                        RegisterDate = (DateTime)dr["data"]
+                    },
+                    RegisterDate = (DateTime)dr["dataendereço"]
+                };
 
-        //        clientlist.Add(client);
-        //    }
-        //    return clientlist;
-        //}
+                ticket.client = new Client()
+                {
+                    Id = (int)dr["Id"],
+                    Name = (string)dr["Name"],
+                    Phone = (string)dr["Phone"],
+                    address = new Address()
+                    {
+                        Id = (int)dr["Id"],
+                        Street = (string)dr["Logradouro"],
+                        Number = (int)dr["Numero"],
+                        District = (string)dr["Bairro"],
+                        ZipCode = (string)dr["CEP"],
+                        Complement = (string)dr["Complemento"],
+                        city = new City()
+                        {
+                            Id = (int)dr["Id"],
+                            Description = (string)dr["Descricao"],
+                            RegisterDate = (DateTime)dr["data"]
+                        },
+                        RegisterDate = (DateTime)dr["DTCadastro"]
+                    }
+                };
+                ticket.Date = (DateTime)dr["RegisterDate"];
+                ticketlist.Add(ticket);
+            }
+            return ticketlist;
+        }
+
 
         public bool Update(int id, double price)
         {

@@ -82,8 +82,11 @@ namespace AgenciaTurismo.Services
             List<Client> clientlist = new();
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("select c.Name,c.Phone,c.RegisterDate, e.Id" +
-                " from Endereco e Join Client c ON e.Id = c.IdEndereco");
+            sb.Append("select c.Name,c.Phone,c.RegisterDate, e.Id, e.Logradouro," +
+                " e.Numero, e.Bairro, e.CEP, e.Complemento,e.DtCadastro , cid.Id, cid.Descricao, cid.DtCadastro as data" +
+                " from Endereco e " +
+                " Join Client as c ON e.Id = c.IdEndereco" +
+                " Join Cidade as cid ON cid.Id = e.IdCidade");
 
             SqlCommand commandSelect = new(sb.ToString(), Conn);
             SqlDataReader dr = commandSelect.ExecuteReader();
@@ -98,17 +101,18 @@ namespace AgenciaTurismo.Services
                 client.address = new Address()
                 {
                     Id = (int)dr["Id"],
-                    //Street = (string)dr["Logradouro"],
-                    //Number = (int)dr["Numero"],
-                    //District = (string)dr["Bairro"],
+                    Street = (string)dr["Logradouro"],
+                    Number = (int)dr["Numero"],
+                    District = (string)dr["Bairro"],
                     ZipCode = (string)dr["CEP"],
                     Complement = (string)dr["Complemento"],
                     city = new City()
                     {
-                      Id = (int)dr["Id"]
+                        Id = (int)dr["Id"],
+                        Description = (string)dr["Descricao"],
+                        RegisterDate = (DateTime)dr["data"]
                     },
-                    RegisterDate = (DateTime)dr["Dtcadastro"]
-
+                    RegisterDate = (DateTime)dr["DTCadastro"]
                 };
                 client.RegisterDate = (DateTime)dr["RegisterDate"];
 

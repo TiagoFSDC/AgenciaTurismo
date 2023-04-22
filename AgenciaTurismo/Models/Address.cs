@@ -15,12 +15,12 @@ namespace AgenciaTurismo.Models
         public string ZipCode { get; set; }
         public string Complement { get; set; }
         public City city { get; set; }
-        public DateOnly RegisterDate { get; set; }
+        public DateTime RegisterDate { get; set; }
 
         public override string ToString()
         {
-            return $"Id: {Id}\nLogradouro: {Street}\nNumero: {Number}\nBairro: {District}\nCEP: {ZipCode}" +
-                $"\nComplemento: {Complement}\nData: {RegisterDate}\nCidade: {city}\n\n";
+            return $"\n\nId: {Id}\nLogradouro: {Street}\nNumero: {Number}\nBairro: {District}\nCEP: {ZipCode}" +
+                $"\nComplemento: {Complement}\nData: {RegisterDate}\nCidade: {city}";
         }
     }
 }

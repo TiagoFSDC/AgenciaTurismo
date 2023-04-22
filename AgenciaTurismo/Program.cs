@@ -53,7 +53,7 @@ internal class Program
                 city = new City() { Id = 1, Description = "GKJ" },
                 Complement = "c",
             },
-            Price = (double)250.56,
+            Price = 250.56M,
         };
 
         Ticket ticket = new()
@@ -115,7 +115,7 @@ internal class Program
         //else
         //    Console.WriteLine("erro");
 
-        new AddressController().FindAll().ForEach(Console.WriteLine);
+        //new AddressController().FindAll().ForEach(Console.WriteLine);
 
         //new CityController().Delete(2);
 
@@ -138,6 +138,8 @@ internal class Program
 
         //new HotelController().Update(1, "Travel");
         //new HotelController().Delete(1);
+
+        new HotelController().FindAll().ForEach(x => Console.WriteLine(x));
 
         //if (new TicketController().Insert(ticket))
         //   Console.WriteLine("Sucesso");

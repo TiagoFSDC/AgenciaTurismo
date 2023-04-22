@@ -88,7 +88,7 @@ namespace AgenciaTurismo.Services
                 {
                     Id = (int)dr["Cidade"],
                     Description = (string)dr["Descricao"],
-                    RegisterDate = (DateOnly)dr["data"]
+                    RegisterDate = (DateTime)dr["data"]
                 };
                 address.RegisterDate = (DateTime)dr["dataendereço"];
 
