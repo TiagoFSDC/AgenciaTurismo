@@ -5,11 +5,11 @@ internal class Program
 {
     private static void Main(string[] args)
     {
-        //City cities = new()
-        //{
-        //    Id = 1,
-        //    Description = "T"
-        //};
+        City cities = new()
+        {
+            Id = 1,
+            Description = "T"
+        };
 
         Address address = new()
         {
@@ -103,7 +103,7 @@ internal class Program
         //else
         //    Console.WriteLine("Erro");
 
-        //new CityController().FindAll().ForEach(Console.WriteLine);
+        new CityController().FindAll().ForEach(Console.WriteLine);
 
         //Console.WriteLine("Digite a nova descrição");
         //string newdesc = Console.ReadLine();
@@ -148,19 +148,6 @@ internal class Program
         //new TicketController().Delete(1);
 
         //new TicketController().FindAll().ForEach(x => Console.WriteLine(x));
-
-        //var city2 = new City()
-        //{
-        //    Id = 1,
-        //    Description = "adwa"
-
-        //};
-
-        //string returninformation = (new CityController().InsertDapper(city2) ? "Registro Inserido" : "Erro");
-
-        //Console.WriteLine(returninformation);
-
-        //new CityController().GetAllDapper().ForEach(x => Console.WriteLine(x));
 
         //Packet packet = new()
         //{
@@ -240,6 +227,6 @@ internal class Program
         //if (new PacketController().Insert(packet))
         //    Console.WriteLine("Sucesso");
 
-        new PacketController().FindAll().ForEach(x => Console.WriteLine(x));
+        //new PacketController().FindAll().ForEach(x => Console.WriteLine(x));
     }
 }
