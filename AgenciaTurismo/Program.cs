@@ -95,7 +95,7 @@ internal class Program
                     Complement = "c",
                 }
             },
-            Price = 546.04
+            Price = 546.04M
         };
 
         //if (new CityController().Insert(cities))
@@ -139,13 +139,15 @@ internal class Program
         //new HotelController().Update(1, "Travel");
         //new HotelController().Delete(1);
 
-        new HotelController().FindAll().ForEach(x => Console.WriteLine(x));
+        //new HotelController().FindAll().ForEach(x => Console.WriteLine(x));
 
         //if (new TicketController().Insert(ticket))
         //   Console.WriteLine("Sucesso");
 
         //new TicketController().Update(1, 456.00);
         //new TicketController().Delete(1);
+
+        //new TicketController().FindAll().ForEach(x => Console.WriteLine(x));
 
         //var city2 = new City()
         //{
@@ -237,5 +239,7 @@ internal class Program
         //};
         //if (new PacketController().Insert(packet))
         //    Console.WriteLine("Sucesso");
+
+        new PacketController().FindAll().ForEach(x => Console.WriteLine(x));
     }
 }

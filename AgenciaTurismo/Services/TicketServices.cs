@@ -113,15 +113,23 @@ namespace AgenciaTurismo.Services
             List<Ticket> ticketlist = new();
             StringBuilder sb = new StringBuilder();
 
-            sb.Append("t.Id, eST.Id, eST.Logradouro," +
-                " eST.Numero, eST.Bairro, eST.CEP, eST.Complemento, eST.DtCadastro,eDT.Id, eDT.Logradouro," +
-                " eDt.Numero, eDT.Bairro, eDT.CEP, eDT.Complemento, eDT.DtCadastro,  " +
-                " cid.Id, cid.Descricao, cid.DtCadastro as data," +
-                " cid2.Id, cid2.Descricao, cid2.DtCadastro as data" +
-                " from Ticket"+
-                " Join " +
-                " Join Endereco e ON h.IdAddress = e.Id" +
-                " Join Cidade as cid ON cid.Id = e.IdCidade");
+            sb.Append(@"select t.Id as idticket, t.Price, t.RegisterDate, c.Id as idclient,  
+                 c.Name, c.Phone, c.RegisterDate, e.Id as idendereco, e.Logradouro as cliente,
+                 e.Numero, e.Bairro, e.CEP, e.Complemento, e.DtCadastro, cAd.Id as idcity3, cAd.Descricao,
+                 cAd.DtCadastro as data,
+                 tST.Id as idstart, tST.Logradouro as startE,
+                 tST.Numero as numberstart, tST.Bairro, tST.CEP, tST.Complemento, tST.DtCadastro as datatst, tDT.Id as iddestination, tDT.Logradouro as destination,
+                 tDT.Numero, tDT.Bairro, tDT.CEP, tDT.Complemento, tDT.DtCadastro as datatdt,
+                 cid.Id as idcity1, cid.Descricao, cid.DtCadastro as data1,
+                 cid2.Id as idcity2, cid2.Descricao, cid2.DtCadastro as data2
+                 from Ticket t
+                 Join Endereco tST ON t.StartId = tST.Id
+                 Join Cidade as cid ON tst.IdCidade = cid.Id
+                 Join Endereco tDT ON t.DestinationId = tDT.Id
+                 Join Cidade as cid2 ON t.DestinationId = cid2.Id
+                 Join Client as c ON t.ClientId = c.Id
+                 Join Endereco e On c.IdEndereco = e.Id
+                 Join Cidade as cAd ON cAd.Id = e.IdCidade");
 
             SqlCommand commandSelect = new(sb.ToString(), Conn);
             SqlDataReader dr = commandSelect.ExecuteReader();
@@ -130,57 +138,58 @@ namespace AgenciaTurismo.Services
             {
                 Ticket ticket = new();
 
-                ticket.Id = (int)dr["Id"];
+                ticket.Id = (int)dr["Idticket"];
+                ticket.Price = (decimal)dr["Price"];
                 ticket.Start = new Address()
                 {
-                    Id = (int)dr["Id"],
-                    Street = (string)dr["Logradouro"],
-                    Number = (int)dr["Numero"],
+                    Id = (int)dr["Idstart"],
+                    Street = (string)dr["startE"],
+                    Number = (int)dr["numberstart"],
                     District = (string)dr["Bairro"],
                     ZipCode = (string)dr["CEP"],
                     Complement = (string)dr["Complemento"],
                     city = new City()
                     {
-                        Id = (int)dr["Cidade"],
+                        Id = (int)dr["Idcity1"],
                         Description = (string)dr["Descricao"],
-                        RegisterDate = (DateTime)dr["data"]
+                        RegisterDate = (DateTime)dr["data1"]
                     },
-                    RegisterDate = (DateTime)dr["dataendereço"]
+                    RegisterDate = (DateTime)dr["datatst"]
                 };
 
                 ticket.Destination = new Address()
                 {
-                    Id = (int)dr["Id"],
-                    Street = (string)dr["Logradouro"],
+                    Id = (int)dr["Iddestination"],
+                    Street = (string)dr["destination"],
                     Number = (int)dr["Numero"],
                     District = (string)dr["Bairro"],
                     ZipCode = (string)dr["CEP"],
                     Complement = (string)dr["Complemento"],
                     city = new City()
                     {
-                        Id = (int)dr["Cidade"],
+                        Id = (int)dr["Idcity2"],
                         Description = (string)dr["Descricao"],
-                        RegisterDate = (DateTime)dr["data"]
+                        RegisterDate = (DateTime)dr["data2"]
                     },
-                    RegisterDate = (DateTime)dr["dataendereço"]
+                    RegisterDate = (DateTime)dr["datatdt"]
                 };
 
                 ticket.client = new Client()
                 {
-                    Id = (int)dr["Id"],
+                    Id = (int)dr["Idclient"],
                     Name = (string)dr["Name"],
                     Phone = (string)dr["Phone"],
                     address = new Address()
                     {
-                        Id = (int)dr["Id"],
-                        Street = (string)dr["Logradouro"],
+                        Id = (int)dr["Idendereco"],
+                        Street = (string)dr["cliente"],
                         Number = (int)dr["Numero"],
                         District = (string)dr["Bairro"],
                         ZipCode = (string)dr["CEP"],
                         Complement = (string)dr["Complemento"],
                         city = new City()
                         {
-                            Id = (int)dr["Id"],
+                            Id = (int)dr["Idcity3"],
                             Description = (string)dr["Descricao"],
                             RegisterDate = (DateTime)dr["data"]
                         },

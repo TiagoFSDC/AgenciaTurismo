@@ -14,5 +14,11 @@ namespace AgenciaTurismo.Models
         public DateTime RegisterDate { get; set; }
         public Client client { get; set; }
         public double Price { get; set; }
+
+        public override string ToString()
+        {
+            return $"Id do pacote: {Id}\nHotel: {hotel}\nTicket: {ticket}" +
+                $"\nData de registro do pacote: {RegisterDate}\nCliente: {client}\nPreço do pacote: {Price}";
+        }
     }
 }

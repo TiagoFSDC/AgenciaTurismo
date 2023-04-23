@@ -157,45 +157,218 @@ namespace AgenciaTurismo.Services
         }
 
 
-        //public List<Hotel> FindAll()
-        //{
-        //    List<Client> clientlist = new();
-        //    StringBuilder sb = new StringBuilder();
+        public List<Packet> FindAll()
+        {
+            List<Packet> packetlist = new();
+            StringBuilder sb = new StringBuilder();
 
-        //    sb.Append("select c.Name,c.Phone,c.RegisterDate, e.Id" +
-        //        " from Endereco e, Client c where e.Id = c.IdEndereco");
+            sb.Append(@"select 
+                              p.Id, 
+                              p.Price, 
+                              t.Id as idticket, 
+                              t.Price as preçoticket, 
+                              t.RegisterDate as dataticket, 
+                              c.Id as idclientT, 
+                              c.Name as nameclientT, 
+                              c.Phone as phoneclietT, 
+                              c.RegisterDate as datacliente, 
+                              eclient.Id as idendereco, 
+                              eclient.Logradouro as logradourocliente, 
+                              eclient.Numero, 
+                              eclient.Bairro, 
+                              eclient.CEP, 
+                              eclient.Complemento, 
+                              eclient.DtCadastro, 
+                              cAd.Id as idcity3, 
+                              cAd.Descricao, 
+                              cAd.DtCadastro as data, 
+                              tST.Id as idstart, 
+                              tST.Logradouro as startE, 
+                              tST.Numero as numberstart, 
+                              tST.Bairro, 
+                              tST.CEP, 
+                              tST.Complemento, 
+                              tST.DtCadastro as datatst, 
+                              tDT.Id as iddestination, 
+                              tDT.Logradouro as destination, 
+                              tDT.Numero, 
+                              tDT.Bairro, 
+                              tDT.CEP, 
+                              tDT.Complemento, 
+                              tDT.DtCadastro as datatdt, 
+                              cid.Id as idcity1, 
+                              cid.Descricao, 
+                              cid.DtCadastro as data1, 
+                              cid2.Id as idcity2, 
+                              cid2.Descricao, 
+                              cid2.DtCadastro as data2, 
+                              h.Id, 
+                              h.Name as Namehotel, 
+                              h.IdAddress, 
+                              h.Price, 
+                              h.RegisterDate, 
+                              e.Id, 
+                              e.Logradouro, 
+                              e.Numero, 
+                              e.Bairro, 
+                              e.CEP, 
+                              e.Complemento, 
+                              e.DtCadastro, 
+                              cidh.Id, 
+                              cidh.Descricao, 
+                              cidh.DtCadastro as data ,
+                              c.Name,
+                              c.Phone,
+                              c.RegisterDate, 
+                              e.Id,
+                              e.Logradouro,
+                              e.Numero, 
+                              e.Bairro, 
+                              e.CEP, 
+                              e.Complemento,
+                              e.DtCadastro , 
+                              cid.Id, 
+                              cid.Descricao, 
+                              cid.DtCadastro as data
+                            from 
+                              Packet p 
+                              Join Ticket t ON t.Id = p.TicketId 
+                              Join Endereco tST ON t.StartId = tST.Id 
+                              Join Cidade as cid ON tst.IdCidade = cid.Id 
+                              Join Endereco tDT ON t.DestinationId = tDT.Id 
+                              Join Cidade as cid2 ON t.DestinationId = cid2.Id 
+                              Join Client as c ON t.ClientId = c.Id 
+                              Join Endereco eclient On c.IdEndereco = eclient.Id 
+                              Join Cidade as cAd ON cAd.Id = eclient.IdCidade 
+                              Join Hotel as h ON p.HotelId = h.Id 
+                              Join Endereco e ON h.IdAddress = e.Id 
+                              Join Cidade as cidh ON cidh.Id = e.IdCidade
+                              Join Client as cliente ON cliente.Id = p.ClientId
+                              Join Endereco as endcli ON endcli.Id = cliente.Idendereco
+                              Join Cidade as cidcli ON cidcli.Id = endcli.IdCidade
+                              ");
 
-        //    SqlCommand commandSelect = new(sb.ToString(), Conn);
-        //    SqlDataReader dr = commandSelect.ExecuteReader();
+            SqlCommand commandSelect = new(sb.ToString(), Conn);
+            SqlDataReader dr = commandSelect.ExecuteReader();
 
-        //    while (dr.Read())
-        //    {
-        //        Client client = new();
+            while (dr.Read())
+            {
+                Packet packet = new Packet();
 
-        //        client.Id = (int)dr["Id"];
-        //        client.Name = (string)dr["Name"];
-        //        client.Phone = (string)dr["Phone"];
-        //        client.address = new Address()
-        //        {
-        //            Id = (int)dr["Id"],
-        //            //Street = (string)dr["Logradouro"],
-        //            //Number = (int)dr["Numero"],
-        //            //District = (string)dr["Bairro"],
-        //            //ZipCode = (string)dr["CEP"],
-        //            //Complement = (string)dr["Complemento"],
-        //            city = new City()
-        //            {
-        //                Id = (int)dr["Id"]
-        //            },
-        //            //RegisterDate = (DateTime)dr["Dtcadastro"]
+                packet.Id = (int)dr["Id"];
 
-        //        };
-        //        client.RegisterDate = (DateTime)dr["RegisterDate"];
+                packet.hotel = new Hotel()
+                {
+                    Id = (int)dr["Id"],
+                    Name = (string)dr["Namehotel"],
+                    address = new Address()
+                    {
+                        Id = (int)dr["Id"],
+                        Street = (string)dr["Logradouro"],
+                        Number = (int)dr["Numero"],
+                        District = (string)dr["Bairro"],
+                        ZipCode = (string)dr["CEP"],
+                        Complement = (string)dr["Complemento"],
+                        city = new City()
+                        {
+                            Id = (int)dr["Id"],
+                            Description = (string)dr["Descricao"],
+                            RegisterDate = (DateTime)dr["data"]
+                        },
+                        RegisterDate = (DateTime)dr["Dtcadastro"]
+                    },
+                    RegisterDate = (DateTime)dr["RegisterDate"],
+                    Price = (decimal)dr["Price"]
+                };
+                packet.ticket = new Ticket()
+                {
+                    Id = (int)dr["Idticket"],
+                    Price = (decimal)dr["preçoticket"],
+                    Start = new Address()
+                    {
+                        Id = (int)dr["Idstart"],
+                        Street = (string)dr["startE"],
+                        Number = (int)dr["numberstart"],
+                        District = (string)dr["Bairro"],
+                        ZipCode = (string)dr["CEP"],
+                        Complement = (string)dr["Complemento"],
+                        city = new City()
+                        {
+                            Id = (int)dr["Idcity1"],
+                            Description = (string)dr["Descricao"],
+                            RegisterDate = (DateTime)dr["data1"]
+                        },
+                        RegisterDate = (DateTime)dr["datatst"]
+                    },
 
-        //        clientlist.Add(client);
-        //    }
-        //    return clientlist;
-        //}
+                    Destination = new Address()
+                    {
+                        Id = (int)dr["Iddestination"],
+                        Street = (string)dr["destination"],
+                        Number = (int)dr["Numero"],
+                        District = (string)dr["Bairro"],
+                        ZipCode = (string)dr["CEP"],
+                        Complement = (string)dr["Complemento"],
+                        city = new City()
+                        {
+                            Id = (int)dr["Idcity2"],
+                            Description = (string)dr["Descricao"],
+                            RegisterDate = (DateTime)dr["data2"]
+                        },
+                        RegisterDate = (DateTime)dr["datatdt"]
+                    },
+
+                    client = new Client()
+                    {
+                        Id = (int)dr["IdclientT"],
+                        Name = (string)dr["nameclientT"],
+                        Phone = (string)dr["Phone"],
+                        address = new Address()
+                        {
+                            Id = (int)dr["Idendereco"],
+                            Street = (string)dr["logradourocliente"],
+                            Number = (int)dr["Numero"],
+                            District = (string)dr["Bairro"],
+                            ZipCode = (string)dr["CEP"],
+                            Complement = (string)dr["Complemento"],
+                            city = new City()
+                            {
+                                Id = (int)dr["Idcity3"],
+                                Description = (string)dr["Descricao"],
+                                RegisterDate = (DateTime)dr["data"]
+                            },
+                            RegisterDate = (DateTime)dr["datacliente"]
+                        }
+                    },
+                    Date = (DateTime)dr["dataticket"]
+                };
+                packet.client = new Client()
+                {
+                    Id = (int)dr["Id"],
+                    Name = (string)dr["Name"],
+                    Phone = (string)dr["Phone"],
+                    address = new Address()
+                    {
+                        Id = (int)dr["Id"],
+                        Street = (string)dr["Logradouro"],
+                        Number = (int)dr["Numero"],
+                        District = (string)dr["Bairro"],
+                        ZipCode = (string)dr["CEP"],
+                        Complement = (string)dr["Complemento"],
+                        city = new City()
+                        {
+                            Id = (int)dr["Id"],
+                            Description = (string)dr["Descricao"],
+                            RegisterDate = (DateTime)dr["data"]
+                        },
+                        RegisterDate = (DateTime)dr["DTCadastro"]
+                    },
+                    RegisterDate = (DateTime)dr["RegisterDate"]
+                };
+                packetlist.Add(packet);
+            }
+            return packetlist;
+        }
 
         public bool Update(int id, double price)
         {
