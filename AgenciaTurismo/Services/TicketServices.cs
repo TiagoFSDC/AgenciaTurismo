@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using AgenciaTurismo.Models;
@@ -106,45 +108,100 @@ namespace AgenciaTurismo.Services
             return (int)commandInsert.ExecuteScalar();
         }
 
-        //public List<Hotel> FindAll()
-        //{
-        //    List<Client> clientlist = new();
-        //    StringBuilder sb = new StringBuilder();
+        public List<Ticket> FindAll()
+        {
+            List<Ticket> ticketlist = new();
+            StringBuilder sb = new StringBuilder();
 
-        //    sb.Append("select c.Name,c.Phone,c.RegisterDate, e.Id" +
-        //        " from Endereco e, Client c where e.Id = c.IdEndereco");
+            sb.Append(@"select t.Id as idticket, t.Price, t.RegisterDate, c.Id as idclient,  
+                 c.Name, c.Phone, c.RegisterDate, e.Id as idendereco, e.Logradouro as cliente,
+                 e.Numero, e.Bairro, e.CEP, e.Complemento, e.DtCadastro, cAd.Id as idcity3, cAd.Descricao,
+                 cAd.DtCadastro as data,
+                 tST.Id as idstart, tST.Logradouro as startE,
+                 tST.Numero as numberstart, tST.Bairro, tST.CEP, tST.Complemento, tST.DtCadastro as datatst, tDT.Id as iddestination, tDT.Logradouro as destination,
+                 tDT.Numero, tDT.Bairro, tDT.CEP, tDT.Complemento, tDT.DtCadastro as datatdt,
+                 cid.Id as idcity1, cid.Descricao, cid.DtCadastro as data1,
+                 cid2.Id as idcity2, cid2.Descricao, cid2.DtCadastro as data2
+                 from Ticket t
+                 Join Endereco tST ON t.StartId = tST.Id
+                 Join Cidade as cid ON tst.IdCidade = cid.Id
+                 Join Endereco tDT ON t.DestinationId = tDT.Id
+                 Join Cidade as cid2 ON t.DestinationId = cid2.Id
+                 Join Client as c ON t.ClientId = c.Id
+                 Join Endereco e On c.IdEndereco = e.Id
+                 Join Cidade as cAd ON cAd.Id = e.IdCidade");
 
-        //    SqlCommand commandSelect = new(sb.ToString(), Conn);
-        //    SqlDataReader dr = commandSelect.ExecuteReader();
+            SqlCommand commandSelect = new(sb.ToString(), Conn);
+            SqlDataReader dr = commandSelect.ExecuteReader();
 
-        //    while (dr.Read())
-        //    {
-        //        Client client = new();
+            while (dr.Read())
+            {
+                Ticket ticket = new();
 
-        //        client.Id = (int)dr["Id"];
-        //        client.Name = (string)dr["Name"];
-        //        client.Phone = (string)dr["Phone"];
-        //        client.address = new Address()
-        //        {
-        //            Id = (int)dr["Id"],
-        //            //Street = (string)dr["Logradouro"],
-        //            //Number = (int)dr["Numero"],
-        //            //District = (string)dr["Bairro"],
-        //            //ZipCode = (string)dr["CEP"],
-        //            //Complement = (string)dr["Complemento"],
-        //            city = new City()
-        //            {
-        //                Id = (int)dr["Id"]
-        //            },
-        //            //RegisterDate = (DateTime)dr["Dtcadastro"]
+                ticket.Id = (int)dr["Idticket"];
+                ticket.Price = (decimal)dr["Price"];
+                ticket.Start = new Address()
+                {
+                    Id = (int)dr["Idstart"],
+                    Street = (string)dr["startE"],
+                    Number = (int)dr["numberstart"],
+                    District = (string)dr["Bairro"],
+                    ZipCode = (string)dr["CEP"],
+                    Complement = (string)dr["Complemento"],
+                    city = new City()
+                    {
+                        Id = (int)dr["Idcity1"],
+                        Description = (string)dr["Descricao"],
+                        RegisterDate = (DateTime)dr["data1"]
+                    },
+                    RegisterDate = (DateTime)dr["datatst"]
+                };
 
-        //        };
-        //        client.RegisterDate = (DateTime)dr["RegisterDate"];
+                ticket.Destination = new Address()
+                {
+                    Id = (int)dr["Iddestination"],
+                    Street = (string)dr["destination"],
+                    Number = (int)dr["Numero"],
+                    District = (string)dr["Bairro"],
+                    ZipCode = (string)dr["CEP"],
+                    Complement = (string)dr["Complemento"],
+                    city = new City()
+                    {
+                        Id = (int)dr["Idcity2"],
+                        Description = (string)dr["Descricao"],
+                        RegisterDate = (DateTime)dr["data2"]
+                    },
+                    RegisterDate = (DateTime)dr["datatdt"]
+                };
 
-        //        clientlist.Add(client);
-        //    }
-        //    return clientlist;
-        //}
+                ticket.client = new Client()
+                {
+                    Id = (int)dr["Idclient"],
+                    Name = (string)dr["Name"],
+                    Phone = (string)dr["Phone"],
+                    address = new Address()
+                    {
+                        Id = (int)dr["Idendereco"],
+                        Street = (string)dr["cliente"],
+                        Number = (int)dr["Numero"],
+                        District = (string)dr["Bairro"],
+                        ZipCode = (string)dr["CEP"],
+                        Complement = (string)dr["Complemento"],
+                        city = new City()
+                        {
+                            Id = (int)dr["Idcity3"],
+                            Description = (string)dr["Descricao"],
+                            RegisterDate = (DateTime)dr["data"]
+                        },
+                        RegisterDate = (DateTime)dr["DTCadastro"]
+                    }
+                };
+                ticket.Date = (DateTime)dr["RegisterDate"];
+                ticketlist.Add(ticket);
+            }
+            return ticketlist;
+        }
+
 
         public bool Update(int id, double price)
         {

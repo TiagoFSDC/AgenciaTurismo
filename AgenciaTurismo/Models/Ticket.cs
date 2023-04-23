@@ -13,6 +13,12 @@ namespace AgenciaTurismo.Models
         public Address Destination { get; set; }
         public Client client { get; set; }
         public DateTime Date { get; set; }
-        public double Price { get; set;}
+        public decimal Price { get; set;}
+
+        public override string ToString()
+        {
+            return $"Id: {Id}\nEndereço de partida: {Start}\n" +
+                $"Endereço de chegada: {Destination}\nCliente: {client}\nData de registro: {Date}\nPreço: {Price}";
+        }
     }
 }

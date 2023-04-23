@@ -15,10 +15,10 @@ namespace AgenciaTurismo.Controllers
             return new TicketServices().Insert(ticket);
         }
 
-        //public List<Ticket> FindAll()
-        //{
-        //    return new TicketServices().FindAll();
-        //}
+        public List<Ticket> FindAll()
+        {
+            return new TicketServices().FindAll();
+        }
 
         public bool Update(int id, double price)
         {

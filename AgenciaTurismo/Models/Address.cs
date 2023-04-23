@@ -19,8 +19,8 @@ namespace AgenciaTurismo.Models
 
         public override string ToString()
         {
-            return $"Id: {Id}\nLogradouro: {Street}\nNumero: {Number}\nBairro: {District}\nCEP: {ZipCode}" +
-                $"\nComplemento: {Complement}\nData: {RegisterDate}\nCidade: {city}\n\n";
+            return $"\n\nId: {Id}\nLogradouro: {Street}\nNumero: {Number}\nBairro: {District}\nCEP: {ZipCode}" +
+                $"\nComplemento: {Complement}\nData: {RegisterDate}\nCidade: {city}";
         }
     }
 }

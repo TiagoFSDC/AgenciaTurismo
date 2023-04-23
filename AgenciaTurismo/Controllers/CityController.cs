@@ -12,23 +12,6 @@ namespace AgenciaTurismo.Controllers
 {
     public class CityController
     {
-        private CityServices cityService;
-        public CityController()
-        {
-            cityService = new CityServices();
-        }
-
-        public List<City> GetAllDapper()
-        {
-            return cityService.GetAllDapper();
-        }
-
-        public bool InsertDapper(City city)
-        {
-            return cityService.InsertDapper(city);
-        }
-
-
         public bool Insert(City city)
         {
             return new CityServices().Insert(city);

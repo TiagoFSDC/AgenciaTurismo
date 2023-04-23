@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AgenciaTurismo.Models;
-using AgenciaTurismo.Repositories;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace AgenciaTurismo.Services
@@ -15,27 +14,13 @@ namespace AgenciaTurismo.Services
         readonly string strconn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\dev-aula\AgenciaTurismo\AgenciaTurismo\docs\Scripts\AgenciaTurismo.mdf";
         readonly SqlConnection Conn;
 
-        private ITourAgencyRepository touragecyRepository;
 
         public CityServices()
         {
-            touragecyRepository = new TourAgencyRepository();
+            Conn = new SqlConnection(strconn);
+            Conn.Open();
         }
 
-        public bool InsertDapper(City city)
-        {
-            return touragecyRepository.InsertDapper(city);
-        }
-
-        public List<City> GetAllDapper()
-        {
-            return touragecyRepository.GetAllDapper();
-        }
-        //public CityServices()
-        //{
-        //    Conn = new SqlConnection(strconn);
-        //    Conn.Open();
-        //}
         public bool Insert(City city)
         {
             bool status = false;
@@ -47,7 +32,7 @@ namespace AgenciaTurismo.Services
 
                 SqlCommand commandInsert = new SqlCommand(strInsert, Conn);
 
-                commandInsert.Parameters.Add(new SqlParameter("@Description", city.Description));
+                commandInsert.Parameters.Add(new SqlParameter("@Descricao", city.Description));
 
                 commandInsert.ExecuteNonQuery();
                 status = true;
