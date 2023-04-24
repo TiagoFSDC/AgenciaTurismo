@@ -44,7 +44,7 @@ namespace AgenciaTurismo.Repositories
             using (var db = new SqlConnection(_strConn))
             {
                 db.Open();
-                db.Execute(Address.INSERT1, address);
+                db.Execute(Address.INSERT, address);
                 status = true;
             }
             return status;
