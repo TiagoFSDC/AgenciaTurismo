@@ -31,11 +31,9 @@ namespace AgenciaTurismo.Services
         {
             return touragecyRepository.GetAllDapper();
         }
-        //public CityServices()
-        //{
-        //    Conn = new SqlConnection(strconn);
-        //    Conn.Open();
-        //}
+
+        //public bool 
+
         public bool Insert(City city)
         {
             bool status = false;
