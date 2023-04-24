@@ -8,6 +8,15 @@ namespace AgenciaTurismo.Models
 {
     public class Address
     {
+        public readonly static string INSERT = @"insert into Endereco (Logradouro, Numero, Bairro, CEP, Complemento, IdCidade)
+                                                    values (@Street, @Number, @District, @ZipCode, @Complement, @City)";
+        public readonly static string GETALL = @"select e.Id,e.Logradouro as Street,e.Numero, e.Bairro, e.CEP, e.Complemento, 
+                                                  e.Dtcadastro as dataendereço, c.Id as Cidade, c.Descricao, c.Dtcadastro as data
+                                                 from Endereco e Join Cidade c ON c.Id = e.IdCidade";
+        public readonly static string UPDATE = @"update Endereco Set Logradouro = @Street where Id = @Id";
+        public readonly static string DELETE = @"Delete from Endereco where Id = @Id";
+
+
         public int Id { get; set; }
         public string Street { get; set; }
         public int Number { get; set; }

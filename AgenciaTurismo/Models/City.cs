@@ -10,6 +10,8 @@ namespace AgenciaTurismo.Models
     {
         public readonly static string INSERT = "insert into Cidade (Descricao) values (@Description)";
         public readonly static string GETALL = "select Id, Descricao as Description, Dtcadastro as RegisterDate from Cidade";
+        public readonly static string UPDATE = "update Cidade Set Descricao =  @Description where id = @Id";
+        public readonly static string DELETE = "Delete from Cidade where Id = @Id";
 
 
         public int Id { get; set; }

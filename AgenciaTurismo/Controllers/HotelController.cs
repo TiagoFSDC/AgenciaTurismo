@@ -15,10 +15,10 @@ namespace AgenciaTurismo.Controllers
             return new HotelServices().Insert(hotel);
         }
 
-        public List<Hotel> FindAll()
-        {
-            return new HotelServices().FindAll();
-        }
+        //public List<Hotel> FindAll()
+        //{
+        //    return new HotelServices().FindAll();
+        //}
 
         public bool Update(int id, string name)
         {

@@ -28,27 +28,15 @@ namespace AgenciaTurismo.Controllers
             return cityService.InsertDapper(city);
         }
 
-
-        public bool Insert(City city)
+        public bool UpdateDapper(City city)
         {
-            return new CityServices().Insert(city);
+            return cityService.UpdateDapper(city);
         }
 
-        public List<City> FindAll() 
-        { 
-            return new CityServices().FindAll();
-        }
-
-        public bool Update(City city, int id, string desc)
+        public bool DeleteDapper(City city)
         {
-            return new CityServices().Update(city, id, desc);
+            return cityService.DeleteDapper(city);
         }
-
-        public bool Delete(int id)
-        {
-            return new CityServices().Delete(id);
-        }
-
 
     }
 }

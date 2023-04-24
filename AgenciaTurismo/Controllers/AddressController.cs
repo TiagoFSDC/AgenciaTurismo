@@ -10,24 +10,31 @@ namespace AgenciaTurismo.Controllers
 {
     public class AddressController
     {
-        public Address Insert(Address address)
+        private AddressServices addressService;
+
+        public AddressController()
         {
-            return new AddressServices().Insert(address);
+            addressService = new AddressServices();
         }
 
-        public List<Address> FindAll()
+        public List<Address> GetAllDapper()
         {
-            return new AddressServices().FindAll();
+            return addressService.GetAllDapper();
         }
 
-        public bool Update(Address address, int id, string desc)
+        public bool InsertDapper(Address address)
         {
-            return new AddressServices().Update(address, id, desc);
+            return addressService.InsertDapper(address);
         }
 
-        public bool Delete(int id)
+        public bool UpdateDapper(Address address)
         {
-            return new AddressServices().Delete(id);
+            return addressService.UpdateDapper(address);
+        }
+
+        public bool DeleteDapper(Address address)
+        {
+            return addressService.DeleteDapper(address);
         }
     }
 }

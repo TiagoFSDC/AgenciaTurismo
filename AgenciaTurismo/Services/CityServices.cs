@@ -15,11 +15,11 @@ namespace AgenciaTurismo.Services
         readonly string strconn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\dev-aula\AgenciaTurismo\AgenciaTurismo\docs\Scripts\AgenciaTurismo.mdf";
         readonly SqlConnection Conn;
 
-        private ITourAgencyRepository touragecyRepository;
+        private ICityRepository touragecyRepository;
 
         public CityServices()
         {
-            touragecyRepository = new TourAgencyRepository();
+            touragecyRepository = new CityRepository();
         }
 
         public bool InsertDapper(City city)
@@ -32,82 +32,14 @@ namespace AgenciaTurismo.Services
             return touragecyRepository.GetAllDapper();
         }
 
-        //public bool 
-
-        public bool Insert(City city)
+        public bool UpdateDapper(City city)
         {
-            bool status = false;
-
-            try
-            {
-                string strInsert = "insert into Cidade (Descricao) " +
-                    "values (@Descricao)";
-
-                SqlCommand commandInsert = new SqlCommand(strInsert, Conn);
-
-                commandInsert.Parameters.Add(new SqlParameter("@Description", city.Description));
-
-                commandInsert.ExecuteNonQuery();
-                status = true;
-            }
-            catch
-            {
-                status = false;
-                throw;
-            }
-            finally
-            {
-                Conn.Close();
-            }
-            return status;
+            return touragecyRepository.UpdateDapper(city);
         }
 
-        public List<City> FindAll()
+        public bool DeleteDapper(City city)
         {
-            List<City> cities = new();
-            StringBuilder sb = new StringBuilder();
-
-            sb.Append("select c.Id, c.Descricao,c.Dtcadastro from Cidade c");
-
-            SqlCommand commandSelect = new(sb.ToString(), Conn);
-            SqlDataReader dr = commandSelect.ExecuteReader();
-
-            while (dr.Read())
-            {
-                City city = new();
-
-                city.Id = (int)dr["Id"];
-                city.Description = (string)dr["Descricao"];
-                city.RegisterDate = (DateTime)dr["Dtcadastro"];
-
-                cities.Add(city);
-            }
-            return cities;
-        }
-
-        public bool Update(City city, int id, string desc)
-        {
-            bool status = false;
-
-            try 
-            {
-                string strUpdate = "update Cidade Set Descricao = " + "'" + desc + "' where Id = "+ id;
-
-                SqlCommand commandUpdate = new SqlCommand(strUpdate, Conn);
-
-                commandUpdate.ExecuteNonQuery();
-                status = true;
-            }
-            catch
-            {
-                status = false;
-                throw;
-            }
-            finally
-            {
-                Conn.Close();
-            }
-            return status;
+            return touragecyRepository.DeleteDapper(city);
         }
     
         public bool Delete(int id)

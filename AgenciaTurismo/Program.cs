@@ -11,156 +11,95 @@ internal class Program
         //    Description = "T"
         //};
 
-        Address address = new()
-        {
-            Id = 1,
-            Street = "g",
-            Number = 5,
-            District = "h",
-            ZipCode = "r",
-            city = new City() { Id = 1, Description = "xx" },
-            Complement = "c",
-        };
-
-        Client client = new Client()
-        {
-            Id= 1,
-            Name = "Tiago",
-            Phone = "123123123",
-            address = new Address()
-            {
-                Id = 1,
-                Street = "g",
-                Number = 5,
-                District = "h",
-                ZipCode = "r",
-                city = new City() { Id = 1, Description = "xx" },
-                Complement = "c",
-            }
-        };
-
-        Hotel hotel = new Hotel()
-        {
-            Id = 1,
-            Name = "Ibis",
-            address = new Address()
-            {
-                Id = 1,
-                Street = "J",
-                Number = 7,
-                District = "B",
-                ZipCode = "r",
-                city = new City() { Id = 1, Description = "GKJ" },
-                Complement = "c",
-            },
-            Price = 250.56M,
-        };
-
-        Ticket ticket = new()
-        {
-            Id = 1,
-            Start = new Address()
-            {
-                Id = 1,
-                Street = "J",
-                Number = 7,
-                District = "Kla",
-                ZipCode = "r",
-                city = new City() { Id = 1, Description = "GKJç" },
-                Complement = "c",
-            },
-            Destination = new Address()
-            {
-                Id = 1,
-                Street = "R",
-                Number = 254,
-                District = "Bairro",
-                ZipCode = "123142345",
-                city = new City() { Id = 1, Description = "Sao Carlos" },
-                Complement = "h",
-            },
-            client = new Client()
-            {
-                Id = 1,
-                Name = "Fabio",
-                Phone = "123123123",
-                address = new Address()
-                {
-                    Id = 1,
-                    Street = "g",
-                    Number = 5,
-                    District = "h",
-                    ZipCode = "r",
-                    city = new City() { Id = 1, Description = "xx" },
-                    Complement = "c",
-                }
-            },
-            Price = 546.04M
-        };
-
-        //if (new CityController().Insert(cities))
-        //    Console.WriteLine("Registrado com sucesso");
-        //else
-        //    Console.WriteLine("Erro");
-
-        //new CityController().FindAll().ForEach(Console.WriteLine);
-
-        //Console.WriteLine("Digite a nova descrição");
-        //string newdesc = Console.ReadLine();
-
-        //new CityController().Update(cities, 1, newdesc);
-
-        //if (new AddressController().Insert(address) != null)
-        //    Console.WriteLine("registrado com sucesso");
-        //else
-        //    Console.WriteLine("erro");
-
-        //new AddressController().FindAll().ForEach(Console.WriteLine);
-
-        //new CityController().Delete(2);
-
-        //Console.WriteLine("Digite o novo logradouro: ");
-        //string logradouro = Console.ReadLine();
-
-        //new AddressController().Update(address, 1, logradouro);
-        //new AddressController().Delete(2);
-
-        //if (new ClientController().Insert(client))
-        //    Console.WriteLine("Sucesso");
-
-        //new ClientController().FindAll().ForEach(x => Console.WriteLine(x));
-
-        //new ClientController().Update(2, "Vinicius");
-        //new ClientController().Delete(3);
-
-        //if (new HotelController().Insert(hotel))
-        //   Console.WriteLine("Sucesso");
-
-        //new HotelController().Update(1, "Travel");
-        //new HotelController().Delete(1);
-
-        //new HotelController().FindAll().ForEach(x => Console.WriteLine(x));
-
-        //if (new TicketController().Insert(ticket))
-        //   Console.WriteLine("Sucesso");
-
-        //new TicketController().Update(1, 456.00);
-        //new TicketController().Delete(1);
-
-        //new TicketController().FindAll().ForEach(x => Console.WriteLine(x));
-
-        //var city2 = new City()
+        //Address address = new()
         //{
         //    Id = 1,
-        //    Description = "adwa"
-
+        //    Street = "g",
+        //    Number = 5,
+        //    District = "h",
+        //    ZipCode = "r",
+        //    city = new City() { Id = 1, Description = "xx" },
+        //    Complement = "c",
         //};
 
-        //string returninformation = (new CityController().InsertDapper(city2) ? "Registro Inserido" : "Erro");
+        //Client client = new Client()
+        //{
+        //    Id= 1,
+        //    Name = "Tiago",
+        //    Phone = "123123123",
+        //    address = new Address()
+        //    {
+        //        Id = 1,
+        //        Street = "g",
+        //        Number = 5,
+        //        District = "h",
+        //        ZipCode = "r",
+        //        city = new City() { Id = 1, Description = "xx" },
+        //        Complement = "c",
+        //    }
+        //};
 
-        //Console.WriteLine(returninformation);
+        //Hotel hotel = new Hotel()
+        //{
+        //    Id = 1,
+        //    Name = "Ibis",
+        //    address = new Address()
+        //    {
+        //        Id = 1,
+        //        Street = "J",
+        //        Number = 7,
+        //        District = "B",
+        //        ZipCode = "r",
+        //        city = new City() { Id = 1, Description = "GKJ" },
+        //        Complement = "c",
+        //    },
+        //    Price = 250.56M,
+        //};
 
-        //new CityController().GetAllDapper().ForEach(x => Console.WriteLine(x));
+        //Ticket ticket = new()
+        //{
+        //    Id = 1,
+        //    Start = new Address()
+        //    {
+        //        Id = 1,
+        //        Street = "J",
+        //        Number = 7,
+        //        District = "Kla",
+        //        ZipCode = "r",
+        //        city = new City() { Id = 1, Description = "GKJç" },
+        //        Complement = "c",
+        //    },
+        //    Destination = new Address()
+        //    {
+        //        Id = 1,
+        //        Street = "R",
+        //        Number = 254,
+        //        District = "Bairro",
+        //        ZipCode = "123142345",
+        //        city = new City() { Id = 1, Description = "Sao Carlos" },
+        //        Complement = "h",
+        //    },
+        //    client = new Client()
+        //    {
+        //        Id = 1,
+        //        Name = "Fabio",
+        //        Phone = "123123123",
+        //        address = new Address()
+        //        {
+        //            Id = 1,
+        //            Street = "g",
+        //            Number = 5,
+        //            District = "h",
+        //            ZipCode = "r",
+        //            city = new City() { Id = 1, Description = "xx" },
+        //            Complement = "c",
+        //        }
+        //    },
+        //    Price = 546.04M
+        //};
+
+
+
 
         //Packet packet = new()
         //{
@@ -236,10 +175,43 @@ internal class Program
         //            Complement = "c",
         //        }
         //    }
-        //};
-        //if (new PacketController().Insert(packet))
-        //    Console.WriteLine("Sucesso");
 
-        new PacketController().FindAll().ForEach(x => Console.WriteLine(x));
+        //var city2 = new City()
+        //{
+        //    Id = 1,
+        //    Description = "Sao Paulo"
+
+        //};
+        //City citydapper = new City();
+
+        //new CityController().GetAllDapper().ForEach(x => Console.WriteLine(x));
+        //string returninformation = (new CityController().InsertDapper(city2) ? "Registro Inserido" : "Erro");
+
+        //Console.WriteLine(returninformation);
+
+        //Console.WriteLine("Digite o id: ");
+        //citydapper.Id = int.Parse(Console.ReadLine());
+        //Console.WriteLine("Digite a descrição: ");
+        //citydapper.Description = Console.ReadLine();
+
+        //new CityController().UpdateDapper(citydapper);
+
+        var address = new Address()
+        {
+            Id = 1,
+            Street = "g",
+            Number = 5,
+            District = "h",
+            ZipCode = "r",
+            city = new City() { Id = 1, Description = "xx" },
+            Complement = "c",
+        };
+
+        Address addressdapper = new Address();
+
+        new AddressController().GetAllDapper().ForEach(x => Console.WriteLine(x));
+        string returninformation = (new AddressController().InsertDapper(address) ? "Registro Inserido" : "Erro");
+
+        Console.WriteLine(returninformation);
     }
 }

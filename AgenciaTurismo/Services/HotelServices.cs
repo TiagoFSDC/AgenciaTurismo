@@ -75,50 +75,50 @@ namespace AgenciaTurismo.Services
             return (int)commandInsert.ExecuteScalar();
         }
 
-        public List<Hotel> FindAll()
-        {
-            List<Hotel> hotellist = new();
-            StringBuilder sb = new StringBuilder();
+        //public List<Hotel> FindAll()
+        //{
+        //    List<Hotel> hotellist = new();
+        //    StringBuilder sb = new StringBuilder();
 
-            sb.Append("select h.Id, h.Name, h.IdAddress, h.Price, h.RegisterDate, e.Id, e.Logradouro," + 
-                " e.Numero, e.Bairro, e.CEP, e.Complemento,e.DtCadastro ," +
-                " cid.Id, cid.Descricao, cid.DtCadastro as data" +
-                " from Hotel as h" +
-                " Join Endereco e ON h.IdAddress = e.Id" +
-                " Join Cidade as cid ON cid.Id = e.IdCidade");
+        //    sb.Append("select h.Id, h.Name, h.IdAddress, h.Price, h.RegisterDate, e.Id, e.Logradouro," + 
+        //        " e.Numero, e.Bairro, e.CEP, e.Complemento,e.DtCadastro ," +
+        //        " cid.Id, cid.Descricao, cid.DtCadastro as data" +
+        //        " from Hotel as h" +
+        //        " Join Endereco e ON h.IdAddress = e.Id" +
+        //        " Join Cidade as cid ON cid.Id = e.IdCidade");
 
-            SqlCommand commandSelect = new(sb.ToString(), Conn);
-            SqlDataReader dr = commandSelect.ExecuteReader();
+        //    SqlCommand commandSelect = new(sb.ToString(), Conn);
+        //    SqlDataReader dr = commandSelect.ExecuteReader();
 
-            while (dr.Read())
-            {
-                Hotel hotel = new();
+        //    while (dr.Read())
+        //    {
+        //        Hotel hotel = new();
 
-                hotel.Id = (int)dr["Id"];
-                hotel.Name = (string)dr["Name"];
-                hotel.address = new Address()
-                {
-                    Id = (int)dr["Id"],
-                    Street = (string)dr["Logradouro"],
-                    Number = (int)dr["Numero"],
-                    District = (string)dr["Bairro"],
-                    ZipCode = (string)dr["CEP"],
-                    Complement = (string)dr["Complemento"],
-                    city = new City()
-                    {
-                        Id = (int)dr["Id"],
-                        Description = (string)dr["Descricao"],
-                        RegisterDate = (DateTime)dr["data"]
-                    },
-                    RegisterDate = (DateTime)dr["Dtcadastro"]
-                };
-                hotel.RegisterDate = (DateTime)dr["RegisterDate"];
-                hotel.Price = (decimal)dr["Price"];
+        //        hotel.Id = (int)dr["Id"];
+        //        hotel.Name = (string)dr["Name"];
+        //        hotel.address = new Address()
+        //        {
+        //            Id = (int)dr["Id"],
+        //            Street = (string)dr["Logradouro"],
+        //            Number = (int)dr["Numero"],
+        //            District = (string)dr["Bairro"],
+        //            ZipCode = (string)dr["CEP"],
+        //            Complement = (string)dr["Complemento"],
+        //            city = new City()
+        //            {
+        //                Id = (int)dr["Id"],
+        //                Description = (string)dr["Descricao"],
+        //                RegisterDate = (DateTime)dr["data"]
+        //            },
+        //            RegisterDate = (DateTime)dr["Dtcadastro"]
+        //        };
+        //        hotel.RegisterDate = (DateTime)dr["RegisterDate"];
+        //        hotel.Price = (decimal)dr["Price"];
 
-                hotellist.Add(hotel);
-            }
-            return hotellist;
-        }
+        //        hotellist.Add(hotel);
+        //    }
+        //    return hotellist;
+        //}
 
         public bool Update(int id, string name)
         {

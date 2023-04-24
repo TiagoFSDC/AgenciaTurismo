@@ -15,10 +15,10 @@ namespace AgenciaTurismo.Controllers
             return new PacketServices().Insert(packet);
         }
 
-        public List<Packet> FindAll()
-        {
-            return new PacketServices().FindAll();
-        }
+        //public List<Packet> FindAll()
+        //{
+        //    return new PacketServices().FindAll();
+        //}
 
         public bool Update(int id, double desc)
         {

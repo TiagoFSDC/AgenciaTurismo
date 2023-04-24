@@ -10,16 +10,22 @@ using static System.Formats.Asn1.AsnWriter;
 
 namespace AgenciaTurismo.Repositories
 {
-    public class TourAgencyRepository : ITourAgencyRepository
+    public class CityRepository : ICityRepository
     {
         private readonly string _strConn = @"Server=(localdb)\MSSQLLocalDB;Integrated Security=true;AttachDbFileName=C:\dev-aula\AgenciaTurismo\AgenciaTurismo\docs\Scripts\AgenciaTurismo.mdf";
-        //readonly SqlConnection conn;
 
-        //public TourAgencyRepository()
-        //{
-        //    conn = new SqlConnection(strConn);
-        //    conn.Open();
-        //}
+        public bool DeleteDapper(City city)
+        {
+            var status = false;
+            using (var db = new SqlConnection(_strConn))
+            {
+                db.Open();
+                db.Execute(City.DELETE, city);
+                status = true;
+            }
+
+            return status;
+        }
 
         public List<City> GetAllDapper()
         {
@@ -42,6 +48,19 @@ namespace AgenciaTurismo.Repositories
                 db.Execute(City.INSERT, city);
                 status = true;
             }
+            return status;
+        }
+
+        public bool UpdateDapper(City city)
+        {
+            var status = false;
+            using (var db = new SqlConnection(_strConn))
+            {
+                db.Open();
+                db.Execute(City.UPDATE, city);
+                status = true;
+            }
+
             return status;
         }
     }

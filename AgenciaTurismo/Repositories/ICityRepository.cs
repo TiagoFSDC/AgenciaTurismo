@@ -7,10 +7,14 @@ using AgenciaTurismo.Models;
 
 namespace AgenciaTurismo.Repositories
 {
-    public interface ITourAgencyRepository
+    public interface ICityRepository
     {
         bool InsertDapper(City city);
 
         List<City> GetAllDapper();
+
+        bool UpdateDapper(City city);
+
+        bool DeleteDapper(City city);
     }
 }
