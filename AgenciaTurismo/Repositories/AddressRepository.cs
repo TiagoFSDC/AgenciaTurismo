@@ -44,7 +44,7 @@ namespace AgenciaTurismo.Repositories
             using (var db = new SqlConnection(_strConn))
             {
                 db.Open();
-                db.Execute(Address.INSERT1, address);
+                db.ExecuteScalar(Address.INSERT, new { @Street = address.Street, @Number = address.Number, @District = address.District, @ZipCode = address.ZipCode, @Complement = address.Complement, @IdCidade = address.city.Id});
                 status = true;
             }
             return status;

@@ -41,30 +41,5 @@ namespace AgenciaTurismo.Services
         {
             return touragecyRepository.DeleteDapper(city);
         }
-    
-        public bool Delete(int id)
-        {
-            bool status = false;
-
-            try
-            {
-                string strDelete = $"Delete from Cidade where Id = {id}";
-
-                SqlCommand commandDelete = new SqlCommand(strDelete, Conn);
-                
-                commandDelete.ExecuteNonQuery();
-                status = true;
-            }
-            catch
-            {
-                status = false;
-                throw;
-            }
-            finally
-            {
-                Conn.Close();
-            }
-            return status;
-        }
     }
 }
