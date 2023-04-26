@@ -22,7 +22,6 @@ namespace AgenciaTurismo.Repositories
                 db.Execute(Address.DELETE, address);
                 status = true;
             }
-
             return status;
         }
 
@@ -32,7 +31,12 @@ namespace AgenciaTurismo.Repositories
 
             using (var db = new SqlConnection(_strConn))
             {
-                var address = db.Query<Address>(Address.GETALL);
+                var address = db.Query<Address, City, Address>(Address.GETALL,(a,c) =>
+                {
+                    a.city = c;
+
+                    return a;
+                });
                 addresslist = (List<Address>)address;
             }
             return addresslist;
@@ -44,7 +48,9 @@ namespace AgenciaTurismo.Repositories
             using (var db = new SqlConnection(_strConn))
             {
                 db.Open();
-                db.ExecuteScalar(Address.INSERT, new { @Street = address.Street, @Number = address.Number, @District = address.District, @ZipCode = address.ZipCode, @Complement = address.Complement, @IdCidade = address.city.Id});
+                db.ExecuteScalar(Address.INSERT, new { @Street = address.Street, 
+                                        @Number = address.Number, @District = address.District, @ZipCode = address.ZipCode, 
+                                        @Complement = address.Complement, @IdCidade = address.city.Id});
                 status = true;
             }
             return status;
@@ -59,7 +65,6 @@ namespace AgenciaTurismo.Repositories
                 db.Execute(Address.UPDATE, address);
                 status = true;
             }
-
             return status;
         }
     }

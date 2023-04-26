@@ -196,22 +196,22 @@ internal class Program
 
         //new CityController().UpdateDapper(citydapper);
 
-        var address = new Address()
-        {
-            Id = 1,
-            Street = "AWDawd",
-            Number = 5,
-            District = "h",
-            ZipCode = "r",
-            city = new City() { Id = 1, Description = "xx" },
-            Complement = "c",
-        };
+        //var address = new Address()
+        //{
+        //    Id = 1,
+        //    Street = "AWDawd",
+        //    Number = 5,
+        //    District = "h",
+        //    ZipCode = "r",
+        //    city = new City() { Id = 1, Description = "xx" },
+        //    Complement = "c",
+        //};
 
-        Address addressdapper = new Address();
+        //Address addressdapper = new Address();
 
-        new AddressController().GetAllDapper().ForEach(x => Console.WriteLine(x));
-        string returninformation1 = (new AddressController().InsertDapper(address) ? "Registro Inserido" : "Erro");
+        //new AddressController().GetAllDapper().ForEach(x => Console.WriteLine(x));
+        //string returninformation1 = (new AddressController().InsertDapper(address) ? "Registro Inserido" : "Erro");
 
-        Console.WriteLine(returninformation1);
+        //Console.WriteLine(returninformation1);
     }
 }

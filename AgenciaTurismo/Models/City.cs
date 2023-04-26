@@ -18,9 +18,14 @@ namespace AgenciaTurismo.Models
         public string Description { get; set; }
         public DateTime RegisterDate { get; set; }
 
+        //public override string ToString()
+        //{
+        //    return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+        //}
+
         public override string ToString()
         {
-            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+            return $"Id: {Id}\nDescrição: {Description}\nData de registro da cidade: {RegisterDate}";
         }
     }
 }
