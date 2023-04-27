@@ -29,7 +29,7 @@ namespace TourAgencyAPIEF.Controllers
           {
               return NotFound();
           }
-            return await _context.Client.ToListAsync();
+            return await _context.Client.Include(c => c.address.city).ToListAsync();
         }
 
         // GET: api/Clients/5

@@ -25,21 +25,21 @@ namespace TourAgencyAPIEF.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Address>>> GetAddress()
         {
-          if (_context.Address == null)
-          {
-              return NotFound();
-          }
-            return await _context.Address.ToListAsync();
+            if (_context.Address == null)
+            {
+                return NotFound();
+            }
+            return await _context.Address.Include(a=> a.city).ToListAsync();
         }
 
         // GET: api/Addresses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Address>> GetAddress(int id)
         {
-          if (_context.Address == null)
-          {
-              return NotFound();
-          }
+            if (_context.Address == null)
+            {
+                return NotFound();
+            }
             var address = await _context.Address.FindAsync(id);
 
             if (address == null)
@@ -77,7 +77,6 @@ namespace TourAgencyAPIEF.Controllers
                     throw;
                 }
             }
-
             return NoContent();
         }
 
@@ -86,10 +85,14 @@ namespace TourAgencyAPIEF.Controllers
         [HttpPost]
         public async Task<ActionResult<Address>> PostAddress(Address address)
         {
-          if (_context.Address == null)
-          {
-              return Problem("Entity set 'TourAgencyAPIEFContext.Address'  is null.");
-          }
+            if (_context.Address == null)
+            {
+                return Problem("Entity set 'TourAgencyAPIEFContext.Address'  is null.");
+            }
+
+            var city = await _context.City.Where(c => c.Id == address.city.Id).FirstOrDefaultAsync();
+            address.city = city;
+
             _context.Address.Add(address);
             await _context.SaveChangesAsync();
 
